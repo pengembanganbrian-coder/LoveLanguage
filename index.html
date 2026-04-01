@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tes 5 Bahasa Cinta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 flex items-center justify-center min-h-screen p-4">
+    <div id="app" class="bg-white p-6 rounded-2xl shadow-xl max-w-md w-full border-t-8 border-pink-500">
+        <div id="start-screen">
+            <h1 class="text-2xl font-bold mb-2 text-center text-gray-800">Tes 5 Bahasa Cinta</h1>
+            <p class="text-sm text-center text-gray-500 mb-6">(Berdasarkan Dr. Gary Chapman)</p>
+            <div class="bg-blue-50 p-4 rounded-xl mb-6 text-sm text-blue-800">
+                Silakan pilih salah satu pernyataan yang paling sering mewakili apa yang paling berarti bagi Anda.
+            </div>
+            <label class="block mb-2 font-semibold text-gray-700">Nama Anda:</label>
+            <input id="nameInput" type="text" placeholder="Masukkan nama..." class="w-full p-3 border rounded-xl mb-6 focus:ring-2 focus:ring-pink-300 outline-none">
+            <button onclick="startTest()" class="w-full bg-pink-500 hover:bg-pink-600 text-white py-3 rounded-xl font-bold transition-all shadow-lg">Mulai Tes Sekarang</button>
+        </div>
+        <div id="test-content" class="hidden"></div>
+    </div>
+
+    <script>
+        // DATA 30 SOAL LENGKAP [cite: 8-107]
+        const questions = [
+            { id: 1, optionA: { text: "Saya menerima catatan/sms/email kata-kata manis.", cat: "words" }, optionB: { text: "Saya berpelukan dengan pasangan saya.", cat: "touch" } },
+            { id: 2, optionA: { text: "Saya bisa menghabiskan waktu sendiri hanya berdua.", cat: "time" }, optionB: { text: "Pasangan saya melakukan sesuatu yang praktis untuk membantu saya.", cat: "acts" } },
+            { id: 3, optionA: { text: "Pasangan saya memberi bingkisan kecil sebagai tanda kasih.", cat: "gifts" }, optionB: { text: "Saya mengambil waktu nyaman tanpa gangguan.", cat: "time" } },
+            { id: 4, optionA: { text: "Pasangan saya melakukan sesuatu yang tak disangka (seperti isi bensin/cuci baju).", cat: "acts" }, optionB: { text: "Saya saling bersentuhan dengan pasangan saya.", cat: "touch" } },
+            { id: 5, optionA: { text: "Pasangan saya menaruh lengannya di bahu saya di tempat umum.", cat: "touch" }, optionB: { text: "Pasangan saya memberi kejutan berupa bingkisan kecil.", cat: "gifts" } },
+            { id: 6, optionA: { text: "Saya bersama pasangan saya meskipun tidak melakukan apapun.", cat: "time" }, optionB: { text: "Saya bergandengan tangan dengan pasangan saya.", cat: "touch" } },
+            { id: 7, optionA: { text: "Pasangan saya memberi saya bingkisan.", cat: "gifts" }, optionB: { text: "Saya mendengar kata 'I love you' dari pasangan saya.", cat: "words" } },
+            { id: 8, optionA: { text: "Saya duduk dekat dengan pasangan saya.", cat: "touch" }, optionB: { text: "Saya dipuji oleh pasangan saya tanpa alasan semu.", cat: "words" } },
+            { id: 9, optionA: { text: "Saya mendapat kesempatan bercengkerama dengan pasangan saya.", cat: "time" }, optionB: { text: "Saya mendapat hadiah tidak terduga dari pasangan saya.", cat: "gifts" } },
+            { id: 10, optionA: { text: "Mendengar pasangan berkata, 'Saya bangga kepadamu.'", cat: "words" }, optionB: { text: "Pasangan saya membantu mengerjakan tugas-tugas saya.", cat: "acts" } },
+            { id: 11, optionA: { text: "Saya mengerjakan sesuatu bersama-sama dengan pasangan.", cat: "time" }, optionB: { text: "Saya mendengar kata-kata dorongan dari pasangan saya.", cat: "words" } },
+            { id: 12, optionA: { text: "Pasangan melakukan sesuatu yang baik, bukan hanya bicara.", cat: "acts" }, optionB: { text: "Saya merasa terhubung melalui pelukan.", cat: "touch" } },
+            { id: 13, optionA: { text: "Saya mendengar pujian dari pasangan saya.", cat: "words" }, optionB: { text: "Pasangan memberi sesuatu sebagai tanda perhatian.", cat: "gifts" } },
+            { id: 14, optionA: { text: "Saya bisa terus bersama-sama dengan pasangan saya.", cat: "time" }, optionB: { text: "Punggung saya dipijat oleh pasangan saya.", cat: "touch" } },
+            { id: 15, optionA: { text: "Pasangan saya memuji pencapaian saya.", cat: "words" }, optionB: { text: "Pasangan melakukan hal yang kurang ia nikmati demi saya.", cat: "acts" } },
+            { id: 16, optionA: { text: "Pasangan saya dan saya sering berciuman.", cat: "touch" }, optionB: { text: "Pasangan menunjukkan ketertarikan pada hobi saya.", cat: "time" } },
+            { id: 17, optionA: { text: "Pasangan mengerjakan proyek khusus yang harus saya selesaikan.", cat: "acts" }, optionB: { text: "Pasangan saya memberikan hadiah yang menarik.", cat: "gifts" } },
+            { id: 18, optionA: { text: "Saya dipuji pasangan karena penampilan saya.", cat: "words" }, optionB: { text: "Pasangan mendengarkan dan memahami perasaan saya.", cat: "time" } },
+            { id: 19, optionA: { text: "Menunjukkan sentuhan non-seksual di muka umum.", cat: "touch" }, optionB: { text: "Pasangan menawarkan mengerjakan urusan-urusan saya.", cat: "acts" } },
+            { id: 20, optionA: { text: "Pasangan mengerjakan lebih banyak tugas dari pembagian biasanya.", cat: "acts" }, optionB: { text: "Mendapat hadiah yang dipilih pasangan dengan sungguh-sungguh.", cat: "gifts" } },
+            { id: 21, optionA: { text: "Pasangan tidak membuka HP saat kami berbincang.", cat: "time" }, optionB: { text: "Pasangan mengajak keluar untuk meringankan stres saya.", cat: "acts" } },
+            { id: 22, optionA: { text: "Saya mengharapkan liburan karena hadiah yang diberikan.", cat: "gifts" }, optionB: { text: "Mendengar kata 'saya menghargaimu' dari pasangan.", cat: "words" } },
+            { id: 23, optionA: { text: "Pasangan membawakan oleh-oleh saat pulang bepergian.", cat: "gifts" }, optionB: { text: "Pasangan mengerjakan tugas saya karena saya lelah.", cat: "acts" } },
+            { id: 24, optionA: { text: "Pasangan tidak menyela ketika saya berbicara.", cat: "time" }, optionB: { text: "Pemberian hadiah menjadi bagian penting hubungan kami.", cat: "gifts" } },
+            { id: 25, optionA: { text: "Pasangan membantu ketika tahu saya sudah kelelahan.", cat: "acts" }, optionB: { text: "Pergi ke suatu tempat untuk menghabiskan waktu bersama.", cat: "time" } },
+            { id: 26, optionA: { text: "Pasangan dan saya memiliki keintiman secara fisik.", cat: "touch" }, optionB: { text: "Pasangan memberi kado kecil yang ia beli saat beraktifitas.", cat: "gifts" } },
+            { id: 27, optionA: { text: "Pasangan mengatakan sesuatu yang mendorong semangat saya.", cat: "words" }, optionB: { text: "Menghabiskan waktu melakukan hobi bersama pasangan.", cat: "time" } },
+            { id: 28, optionA: { text: "Pasangan memberi hadiah kejutan sebagai penghargaan.", cat: "gifts" }, optionB: { text: "Sering bersentuhan saat melakukan aktifitas sehari-hari.", cat: "touch" } },
+            { id: 29, optionA: { text: "Pasangan membantu saya meskipun ia sedang sibuk.", cat: "acts" }, optionB: { text: "Mendengar pasangan berkata, 'Aku menghargaimu.'", cat: "words" } },
+            { id: 30, optionA: { text: "Berpelukan setelah pasangan pulang dari bepergian lama.", cat: "touch" }, optionB: { text: "Mendengar pasangan berkata betapa berharganya saya.", cat: "words" } }
+        ];
+
+        let currentStep = 0;
+        let answers = [];
+        let userName = "";
+
+        function startTest() {
+            userName = document.getElementById('nameInput').value;
+            if(!userName) return alert("Isi nama dulu ya bos!");
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('test-content').classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = questions[currentStep];
+            const content = document.getElementById('test-content');
+            content.innerHTML = `
+                <div class="mb-4 bg-pink-50 p-2 rounded text-center text-xs font-bold text-pink-600 uppercase tracking-widest">Soal ${currentStep + 1} dari 30</div>
+                <h2 class="text-lg font-bold mb-6 text-gray-800 italic">"Lebih berkesan bagi saya ketika..."</h2>
+                <button onclick="handleAnswer('${q.optionA.cat}')" class="w-full text-left p-4 border-2 border-gray-100 mb-4 hover:border-pink-300 hover:bg-pink-50 rounded-xl transition-all shadow-sm">${q.optionA.text}</button>
+                <button onclick="handleAnswer('${q.optionB.cat}')" class="w-full text-left p-4 border-2 border-gray-100 hover:border-pink-300 hover:bg-pink-50 rounded-xl transition-all shadow-sm">${q.optionB.text}</button>
+            `;
+        }
+
+        async function handleAnswer(category) {
+            answers.push(category);
+            if(currentStep < questions.length - 1) {
+                currentStep++;
+                showQuestion();
+            } else {
+                finishTest();
+            }
+        }
+
+        async function finishTest() {
+            document.getElementById('test-content').innerHTML = "<div class='py-10 text-center'><div class='animate-spin rounded-full h-10 w-10 border-b-2 border-pink-500 mx-auto mb-4'></div><p>Menghitung & menyimpan hasil...</p></div>";
+            
+            const counts = { words:0, time:0, gifts:0, acts:0, touch:0 };
+            answers.forEach(c => counts[c]++);
+            
+            const sorted = Object.keys(counts).sort((a,b) => counts[b] - counts[a]);
+            const primary = sorted[0];
+
+            // GANTI URL DI BAWAH INI DENGAN URL GOOGLE APPS SCRIPT KAMU
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzrnGyE6oQUwtnhvDj1hBuGKFo-76B73vNZHw44G1HUWAQ5OMEe1l1v_cPVXRc8n3iKmg/exec';
+            
+            try {
+                await fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify({ nama: userName, ...counts, result: primary.toUpperCase() })
+                });
+            } catch (e) { console.log("Gagal kirim data:", e); }
+
+            // Menampilkan hasil akhir [cite: 109-113]
+            const labels = {
+                words: "Word of Affirmation (Kata-kata)",
+                time: "Quality Time (Kebersamaan)",
+                gifts: "Receiving Gifts (Hadiah)",
+                acts: "Acts of Service (Tindakan)",
+                touch: "Physical Touch (Sentuhan Fisik)"
+            };
+
+            document.getElementById('test-content').innerHTML = `
+                <div class="text-center py-4">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Hasil Tes</h2>
+                    <p class="text-gray-600 mb-4">Bahasa cinta utama ${userName} adalah:</p>
+                    <div class="bg-pink-500 text-white p-4 rounded-2xl text-lg font-black uppercase shadow-lg mb-6">${labels[primary]}</div>
+                    <div class="text-left text-sm space-y-2 border-t pt-4">
+                        <p><b>Skor Lengkap:</b></p>
+                        <p>💬 Kata-kata: ${counts.words}</p>
+                        <p>⏳ Kebersamaan: ${counts.time}</p>
+                        <p>🎁 Hadiah: ${counts.gifts}</p>
+                        <p>🛠️ Tindakan: ${counts.acts}</p>
+                        <p>🤝 Sentuhan: ${counts.touch}</p>
+                    </div>
+                    <button onclick="location.reload()" class="mt-6 text-pink-500 font-bold underline">Ulangi Tes</button>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
