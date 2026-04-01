@@ -24,57 +24,50 @@
         <div id="start-screen" class="text-center">
             <div class="text-5xl mb-4">💖</div>
             <h1 class="text-3xl font-extrabold text-gray-800 mb-6 tracking-tight">Tes Love Language</h1>
-            
             <div class="text-left mb-4">
                 <label class="block text-[10px] font-bold uppercase text-pink-400 mb-2 ml-2 tracking-widest">Nama Lengkap</label>
-                <input id="nameInput" type="text" placeholder="Masukkan nama..." 
-                    class="w-full p-4 bg-white/50 border border-pink-100 rounded-2xl focus:ring-4 focus:ring-pink-200 outline-none transition-all shadow-inner text-gray-700 font-medium">
+                <input id="nameInput" type="text" placeholder="Masukkan nama..." class="w-full p-4 bg-white/50 border border-pink-100 rounded-2xl focus:ring-4 focus:ring-pink-200 outline-none transition-all shadow-inner text-gray-700 font-medium">
             </div>
-
             <div class="text-left mb-8">
                 <label class="block text-[10px] font-bold uppercase text-pink-400 mb-2 ml-2 tracking-widest">Bagian / Unit Kerja</label>
-                <input id="unitInput" type="text" placeholder="Contoh: Bagian Keuangan..." 
-                    class="w-full p-4 bg-white/50 border border-pink-100 rounded-2xl focus:ring-4 focus:ring-pink-200 outline-none transition-all shadow-inner text-gray-700 font-medium">
+                <input id="unitInput" type="text" placeholder="Contoh: Bagian Keuangan..." class="w-full p-4 bg-white/50 border border-pink-100 rounded-2xl focus:ring-4 focus:ring-pink-200 outline-none transition-all shadow-inner text-gray-700 font-medium">
             </div>
-            
-            <button onclick="startTest()" class="w-full btn-love text-white py-4 rounded-2xl font-bold shadow-xl shadow-pink-200 hover:scale-[1.02] transition-all active:scale-95 text-lg">
-                Mulai Tes
-            </button>
+            <button onclick="startTest()" class="w-full btn-love text-white py-4 rounded-2xl font-bold shadow-xl shadow-pink-200 hover:scale-[1.02] transition-all active:scale-95 text-lg">Mulai Tes</button>
         </div>
         <div id="test-content" class="hidden"></div>
     </div>
 
     <script>
         const questions = [
-            { id: 1, optionA: { text: "Saya menerima catatan/sms/email kata-kata manis.", cat: "words" }, optionB: { text: "Saya berpelukan dengan pasangan saya.", cat: "touch" } },
-            { id: 2, optionA: { text: "Saya bisa menghabiskan waktu sendiri hanya berdua.", cat: "time" }, optionB: { text: "Pasangan saya melakukan sesuatu yang praktis untuk membantu saya.", cat: "acts" } },
-            { id: 3, optionA: { text: "Pasangan saya memberi bingkisan kecil sebagai tanda kasih.", cat: "gifts" }, optionB: { text: "Saya mengambil waktu nyaman tanpa gangguan.", cat: "time" } },
-            { id: 4, optionA: { text: "Pasangan saya secara tidak disangka melakukan sesuatu untuk saya seperti mengisi penuh bahan bakar mobil atau mencuci pakaian.", cat: "acts" }, optionB: { text: "Saya saling bersentuhan dengan pasangan saya.", cat: "touch" } },
+            { id: 1, optionA: { text: "Saya menerima catatan/sms/email kata-kata manis saat sedang tidak ada sesuatu yang khusus dari orang yang saya kasihi.", cat: "words" }, optionB: { text: "Saya berpelukan dengan pasangan saya.", cat: "touch" } },
+            { id: 2, optionA: { text: "Saya bisa menghabiskan waktu sendiri hanya berdua dengan pasangan saya.", cat: "time" }, optionB: { text: "Pasangan saya melakukan sesuatu yang praktis untuk membantu saya.", cat: "acts" } },
+            { id: 3, optionA: { text: "Pasangan saya memberi bingkisan kecil sebagai tanda bahwa kami saling mengasihi.", cat: "gifts" }, optionB: { text: "Saya mengambil waktu yang nyaman tanpa gangguan dengan pasangan saya.", cat: "time" } },
+            { id: 4, optionA: { text: "Pasangan saya secara tidak disangka melakukan sesuatu untuk saya seperti mengisi penuh bahan bakar mobil saya atau mencuci pakaian.", cat: "acts" }, optionB: { text: "Saya saling bersentuhan dengan pasangan saya.", cat: "touch" } },
             { id: 5, optionA: { text: "Pasangan saya menaruh lengannya di bahu saya saat kami di tempat umum.", cat: "touch" }, optionB: { text: "Pasangan saya memberi saya kejutan berupa bingkisan kecil.", cat: "gifts" } },
             { id: 6, optionA: { text: "Saya bersama dengan pasangan saya, bahkan sekalipun kami tidak melakukan apapun.", cat: "time" }, optionB: { text: "Saya bergandengan tangan dengan pasangan saya.", cat: "touch" } },
-            { id: 7, optionA: { text: "Pasangan saya memberi saya bingkisan.", cat: "gifts" }, optionB: { text: "Saya mendengar kata ‘I love you’ dari pasangan saya.", cat: "words" } },
+            { id: 7, optionA: { text: "Pasangan saya memberi saya bingkisan.", cat: "gifts" }, optionB: { text: "Saya mendengar kata 'I love you' dari pasangan saya.", cat: "words" } },
             { id: 8, optionA: { text: "Saya duduk dekat dengan pasangan saya.", cat: "touch" }, optionB: { text: "Saya dipuji oleh pasangan saya tanpa alasan yang semu.", cat: "words" } },
             { id: 9, optionA: { text: "Saya mendapat kesempatan untuk bercengkerama dengan pasangan saya.", cat: "time" }, optionB: { text: "Saya mendapat hadiah yang tidak terduga dari pasangan saya.", cat: "gifts" } },
-            { id: 10, optionA: { text: "Saya mendengar pasangan saya berkata kepada saya, ‘Saya bangga kepadamu.’", cat: "words" }, optionB: { text: "Pasangan saya membantu saya mengerjakan tugas-tugas saya.", cat: "acts" } },
+            { id: 10, optionA: { text: "Saya mendengar pasangan saya berkata kepada saya, 'Saya bangga kepadamu.'", cat: "words" }, optionB: { text: "Pasangan saya membantu saya mengerjakan tugas-tugas saya.", cat: "acts" } },
             { id: 11, optionA: { text: "Saya mengerjakan sesuatu bersama-sama dengan pasangan saya.", cat: "time" }, optionB: { text: "Saya mendengar kata-kata dorongan dari pasangan saya.", cat: "words" } },
             { id: 12, optionA: { text: "Pasangan saya melakukan sesuatu untuk saya dan bukan hanya membicarakan tentang melakukan sesuatu yang baik.", cat: "acts" }, optionB: { text: "Saya merasa terhubung dengan pasangan saya melalui pelukan.", cat: "touch" } },
             { id: 13, optionA: { text: "Saya mendengar pujian dari pasangan saya.", cat: "words" }, optionB: { text: "Pasangan saya memberikan sesuatu kepada saya sebagai perwujudan bahwa ia sangat perhatian kepada saya.", cat: "gifts" } },
             { id: 14, optionA: { text: "Saya bisa terus bersama-sama dengan pasangan saya.", cat: "time" }, optionB: { text: "Punggung saya dipijat oleh pasangan saya.", cat: "touch" } },
-            { id: 15, optionA: { text: "Pasangan saya memuji pencapaian saya.", cat: "words" }, optionB: { text: "Pasangan saya melakukan sesuatu yang saya tahu ia sebenarnya kurang menikmatinya demi saya.", cat: "acts" } },
+            { id: 15, optionA: { text: "Pasangan saya memuji pencapaian saya.", cat: "words" }, optionB: { text: "Pasangan saya melakukan sesuatu untuk saya yang saya tahu bahwa ia sebenarnya kurang menikmatinya demi saya.", cat: "acts" } },
             { id: 16, optionA: { text: "Pasangan saya dan saya sering berciuman.", cat: "touch" }, optionB: { text: "Saya merasa pasangan saya menunjukkan ketertarikan terhadap sesuatu yang saya perhatikan.", cat: "time" } },
             { id: 17, optionA: { text: "Pasangan saya mengerjakan proyek khusus yang harus saya selesaikan.", cat: "acts" }, optionB: { text: "Pasangan saya memberikan hadiah yang sangat menarik.", cat: "gifts" } },
             { id: 18, optionA: { text: "Saya dipuji pasangan saya karena penampilan saya.", cat: "words" }, optionB: { text: "Pasangan saya menyediakan waktu untuk mendengarkan saya dan ia benar-benar memahami perasaan saya.", cat: "time" } },
             { id: 19, optionA: { text: "Pasangan saya dan saya menunjukkan sentuhan non-seksual di muka umum.", cat: "touch" }, optionB: { text: "Pasangan saya menawarkan untuk mengerjakan urusan-urusan saya.", cat: "acts" } },
-            { id: 20, optionA: { text: "Pasangan saya mengerjakan lebih banyak daripada yang biasanya dia kerjakan dalam pembagian tugas.", cat: "acts" }, optionB: { text: "Saya mendapat hadiah dari pasangan saya yang saya tahu hadiah itu ia pilih dengan sungguh-sungguh.", cat: "gifts" } },
-            { id: 21, optionA: { text: "Pasangan saya tidak membuka handphone-nya ketika kami berbincang-bincang.", cat: "time" }, optionB: { text: "Pasangan saya mengajak saya keluar untuk meringankan rasa tertekan saya.", cat: "acts" } },
-            { id: 22, optionA: { text: "Saya bisa mengharapkan sebuah perjalanan liburan karena hadiah-hadiah yang diberikan.", cat: "gifts" }, optionB: { text: "Saya mendengar kata ‘saya menghargaimu’ dari pasangan saya.", cat: "words" } },
-            { id: 23, optionA: { text: "Pasangan saya membawakan oleh-oleh saat ia pulang dari bepergian.", cat: "gifts" }, optionB: { text: "Pasangan saya mengerjakan tugas saya karena saya terlalu lelah.", cat: "acts" } },
-            { id: 24, optionA: { text: "Pasangan saya tidak menyela saya ketika saya berbicara.", cat: "time" }, optionB: { text: "Pemberian hadiah menjadi bagian yang penting dalam hubungan kami.", cat: "gifts" } },
+            { id: 20, optionA: { text: "Pasangan saya mengerjakan lebih banyak daripada yang biasanya dia kerjakan dalam pembagian tugas-tugas dengan saya.", cat: "acts" }, optionB: { text: "Saya mendapat hadiah dari pasangan saya yang saya tahu bahwa hadiah itu ia pilih dengan sungguh-sungguh.", cat: "gifts" } },
+            { id: 21, optionA: { text: "Pasangan saya tidak membuka handphone nya ketika kami berbincang-bincang.", cat: "time" }, optionB: { text: "Pasangan saya mengajak saya keluar untuk meringankan rasa tertekan saya.", cat: "acts" } },
+            { id: 22, optionA: { text: "Saya bisa mengharapkan sebuah perjalanan liburan karena hadiah-hadiah yang diberikan.", cat: "gifts" }, optionB: { text: "Saya mendengar kata 'saya menghargaimu' dari pasangan saya.", cat: "words" } },
+            { id: 23, optionA: { text: "Pasangan saya membawakan oleh-oleh saat ia pulang dari bepergian.", cat: "gifts" }, optionB: { text: "Pasangan saya mengerjakan apa yang seharusnya menjadi tugas saya karena saya terlalu lelah untuk mengerjakannya.", cat: "acts" } },
+            { id: 24, optionA: { text: "Pasangan saya tidak menyela saya ketika saya berbicara.", cat: "time" }, optionB: { text: "Pembagian hadiah menjadi bagian yang penting dalam hubungan kami.", cat: "gifts" } },
             { id: 25, optionA: { text: "Pasangan saya membantu saya ketika ia tahu bahwa saya sudah kelelahan.", cat: "acts" }, optionB: { text: "Saya pergi ke suatu tempat untuk menghabiskan waktu dengan pasangan saya.", cat: "time" } },
             { id: 26, optionA: { text: "Pasangan saya dan saya memiliki keintiman secara fisik.", cat: "touch" }, optionB: { text: "Pasangan saya memberikan kado kecil yang ia beli saat ia sedang beraktifitas.", cat: "gifts" } },
             { id: 27, optionA: { text: "Pasangan saya mengatakan sesuatu yang mendorong semangat saya.", cat: "words" }, optionB: { text: "Saya menggunakan waktu untuk mengerjakan aktifitas atau hobi dengan pasangan saya.", cat: "time" } },
             { id: 28, optionA: { text: "Pasangan saya memberi hadiah kejutan untuk menunjukkan penghargaan kepada saya.", cat: "gifts" }, optionB: { text: "Pasangan saya dan saya sering bersentuhan ketika melakukan aktifitas sehari-hari.", cat: "touch" } },
-            { id: 29, optionA: { text: "Pasangan saya membantu saya, khususnya ketika saya tahu bahwa ia sebenarnya sedang sibuk.", cat: "acts" }, optionB: { text: "Saya mendengar pasangan saya secara khusus berkata, ‘Aku menghargaimu.’", cat: "words" } },
+            { id: 29, optionA: { text: "Pasangan saya membantu saya, khususnya ketika saya tahu bahwa ia sebenarnya sedang sibuk.", cat: "acts" }, optionB: { text: "Saya mendengar pasangan saya secara khusus berkata, 'Aku menghargaimu.'", cat: "words" } },
             { id: 30, optionA: { text: "Pasangan saya dan saya berpelukan setelah ia pulang dari bepergian beberapa lama.", cat: "touch" }, optionB: { text: "Saya mendengar pasangan saya berkata betapa berharganya saya bagi dia.", cat: "words" } }
         ];
 
@@ -84,10 +77,10 @@
         let userUnit = "";
 
         const library = {
-            words: { title: "Words of Affirmation", emoji: "💬", meaning: "Bagi Anda, kata-kata memiliki kekuatan yang luar biasa. Anda merasa benar-benar dicintai dan berharga ketika mendengar pujian yang tulus, kata-kata apresiasi yang spesifik, atau kalimat penyemangat saat sedang lelah. Kalimat verbal adalah kunci energi Anda, di mana sebuah catatan kecil berisi ucapan terima kasih atau pesan singkat penyemangat bisa menjadi pengisi energi yang luar biasa bagi Anda dibandingkan hal lainnya." },
+            words: { title: "Word of Affirmation", emoji: "💬", meaning: "Bagi Anda, kata-kata memiliki kekuatan yang luar biasa. Anda merasa benar-benar dicintai dan berharga ketika mendengar pujian yang tulus, kata-kata apresiasi yang spesifik, atau kalimat penyemangat saat sedang lelah. Kalimat verbal adalah kunci energi Anda, di mana sebuah catatan kecil berisi ucapan terima kasih atau pesan singkat penyemangat bisa menjadi pengisi energi yang luar biasa bagi Anda dibandingkan hal lainnya." },
             time: { title: "Quality Time", emoji: "⏳", meaning: "Anda memandang waktu sebagai aset paling berharga. Anda merasa paling dicintai ketika seseorang memberikan kehadiran penuhnya untuk Anda tanpa gangguan ponsel atau distraksi lainnya. Percakapan dua arah yang mendalam, tatapan mata yang fokus, serta aktivitas bermakna yang dilakukan bersama-sama adalah cara utama bagi Anda untuk merasakan koneksi yang kuat dengan orang terkasih." },
-            gifts: { title: "Receiving Gifts", emoji: "🎁", meaning: "Hadiah bagi Anda adalah sebuah simbol visual dari kasih sayang. Ini bukan tentang nilai nominal atau harga barangnya, melainkan tentang 'pemikiran' di balik pemberian tersebut. Anda merasa sangat diperhatikan ketika seseorang meluangkan waktu untuk memilihkan atau membuatkan sesuatu khusus untuk Anda, karena bagi Anda hadiah tersebut adalah bukti nyata bahwa 'dia sedang memikirkan aku'." },
-            acts: { title: "Acts of Service", emoji: "🛠️", meaning: "Bagi Anda, tindakan nyata berbicara jauh lebih keras daripada sekadar kata-kata manis. Anda merasa sangat disayangi ketika seseorang mengambil inisiatif untuk membantu meringankan beban pekerjaan Anda, melakukan hal-hal praktis tanpa diminta, atau memberikan solusi nyata atas masalah yang Anda hadapi. Bantuan tulus pada hal-hal kecil sekalipun adalah bentuk perhatian yang paling menyentuh hati Anda." },
+            gifts: { title: "Gifts", emoji: "🎁", meaning: "Hadiah bagi Anda adalah sebuah simbol visual dari kasih sayang. Ini bukan tentang nilai nominal atau harga barangnya, melainkan tentang 'pemikiran' di balik pemberian tersebut. Anda merasa sangat diperhatikan ketika seseorang meluangkan waktu untuk memilihkan atau membuatkan sesuatu khusus untuk Anda, karena bagi Anda hadiah tersebut adalah bukti nyata bahwa 'dia sedang memikirkan aku'." },
+            acts: { title: "Act of Service", emoji: "🛠️", meaning: "Bagi Anda, tindakan nyata berbicara jauh lebih keras daripada sekadar kata-kata manis. Anda merasa sangat disayangi ketika seseorang mengambil inisiatif untuk membantu meringankan beban pekerjaan Anda, melakukan hal-hal praktis tanpa diminta, atau memberikan solusi nyata atas masalah yang Anda hadapi. Bantuan tulus pada hal-hal kecil sekalipun adalah bentuk perhatian yang paling menyentuh hati Anda." },
             touch: { title: "Physical Touch", emoji: "🤝", meaning: "Anda merasakan kedekatan emosional melalui kontak fisik yang hangat. Hal-hal sederhana seperti jabat tangan yang erat, tepukan penyemangat di bahu saat Anda berprestasi, atau pelukan hangat saat Anda sedang sedih memberikan rasa aman dan dicintai yang tak tergantikan. Bagi Anda, sentuhan fisik adalah jembatan utama untuk mentransfer energi kasih sayang dan dukungan emosional." }
         };
 
@@ -134,27 +127,19 @@
 
         async function finishTest() {
             document.getElementById('test-content').innerHTML = "<div class='py-12 text-center'><p class='font-bold text-pink-500 animate-pulse uppercase tracking-widest text-xs'>Menyusun profil emosional Anda...</p></div>";
-            
             const counts = { words:0, time:0, gifts:0, acts:0, touch:0 };
             answers.forEach(c => counts[c]++);
             const sorted = Object.keys(counts).sort((a,b) => counts[b] - counts[a]);
             const r1 = sorted[0], r2 = sorted[1], r3 = sorted[2];
-
             const scriptURL = 'https://script.google.com/macros/s/AKfycbzrnGyE6oQUwtnhvDj1hBuGKFo-76B73vNZHw44G1HUWAQ5OMEe1l1v_cPVXRc8n3iKmg/exec';
             try { 
-                await fetch(scriptURL, { 
-                    method: 'POST', 
-                    mode: 'no-cors', 
-                    body: JSON.stringify({ nama: userName, bagian: userUnit, ...counts, result: r1.toUpperCase() }) 
-                }); 
+                await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ nama: userName, bagian: userUnit, ...counts, result: r1.toUpperCase() }) }); 
             } catch (e) { console.log(e); }
-
             document.getElementById('test-content').innerHTML = `
                 <div class="animate-in fade-in zoom-in duration-700">
                     <h2 class="text-2xl font-black text-gray-800 mb-1 text-center">Profil Bahasa Cinta</h2>
                     <p class="text-center text-pink-600 text-sm mb-1 font-black uppercase tracking-widest">${userName}</p>
                     <p class="text-center text-gray-400 text-[10px] mb-8 uppercase tracking-widest">${userUnit}</p>
-                    
                     <div class="card-result text-white p-8 rounded-[2.5rem] shadow-2xl mb-8 relative overflow-hidden text-center">
                         <div class="absolute top-0 right-0 p-4 opacity-10 text-8xl">${library[r1].emoji}</div>
                         <div class="relative z-10">
@@ -163,7 +148,6 @@
                             <p class="text-sm leading-[1.8] opacity-95 font-medium text-justify">${library[r1].meaning}</p>
                         </div>
                     </div>
-
                     <div class="grid grid-cols-2 gap-4 mb-10 text-center">
                         <div class="bg-pink-50/50 p-5 rounded-3xl border border-pink-100/50">
                             <p class="text-[9px] font-bold text-pink-400 uppercase mb-2 tracking-widest text-center">Peringkat 2</p>
@@ -174,7 +158,6 @@
                             <p class="text-xs font-black text-gray-700 text-center uppercase">${library[r3].emoji} ${library[r3].title}</p>
                         </div>
                     </div>
-
                     <div class="text-center">
                         <button onclick="location.reload()" class="text-pink-400 font-bold text-[10px] uppercase hover:text-pink-600 transition-all tracking-[0.2em] underline decoration-pink-200 underline-offset-4">Ulangi Analisis</button>
                     </div>
