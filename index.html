@@ -3,26 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tes 5 Bahasa Cinta</title>
+    <title>Tes Love Language - DJBC</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .djbc-gradient { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); }
+        .result-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
+    </style>
 </head>
-<body class="bg-slate-100 flex items-center justify-center min-h-screen p-4">
-    <div id="app" class="bg-white p-6 rounded-2xl shadow-xl max-w-md w-full border-t-8 border-pink-500">
-        <div id="start-screen">
-            <h1 class="text-2xl font-bold mb-2 text-center text-gray-800">Tes 5 Bahasa Cinta</h1>
-            <p class="text-sm text-center text-gray-500 mb-6">(Berdasarkan Dr. Gary Chapman)</p>
-            <div class="bg-blue-50 p-4 rounded-xl mb-6 text-sm text-blue-800">
-                Silakan pilih salah satu pernyataan yang paling sering mewakili apa yang paling berarti bagi Anda.
+<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
+    <div id="app" class="bg-white p-8 rounded-3xl shadow-2xl max-w-lg w-full border border-slate-200">
+        <div class="flex items-center justify-center gap-2 mb-6">
+            <div class="bg-slate-800 text-white px-3 py-1 rounded-lg font-black text-sm tracking-tighter">DJBC</div>
+            <div class="h-4 w-px bg-slate-300"></div>
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Pengembangan SDM</span>
+        </div>
+
+        <div id="start-screen" class="text-center">
+            <h1 class="text-3xl font-extrabold text-slate-900 mb-2">Tes Love Language</h1>
+            <p class="text-slate-500 mb-8 text-sm leading-relaxed">Pahami preferensi komunikasi emosional Anda untuk membangun hubungan interpersonal yang lebih harmonis di lingkungan kerja maupun pribadi. [cite: 3, 6]</p>
+            
+            <div class="text-left mb-6">
+                <label class="block text-xs font-bold uppercase text-slate-400 mb-2 ml-1">Nama Lengkap</label>
+                <input id="nameInput" type="text" placeholder="Masukkan nama untuk pendataan..." 
+                    class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-400 outline-none transition-all">
             </div>
-            <label class="block mb-2 font-semibold text-gray-700">Nama Anda:</label>
-            <input id="nameInput" type="text" placeholder="Masukkan nama..." class="w-full p-3 border rounded-xl mb-6 focus:ring-2 focus:ring-pink-300 outline-none">
-            <button onclick="startTest()" class="w-full bg-pink-500 hover:bg-pink-600 text-white py-3 rounded-xl font-bold transition-all shadow-lg">Mulai Tes Sekarang</button>
+            
+            <button onclick="startTest()" class="w-full djbc-gradient text-white py-4 rounded-2xl font-bold shadow-lg hover:opacity-90 transition-all active:scale-95">
+                Mulai Tes 30 Soal
+            </button>
         </div>
         <div id="test-content" class="hidden"></div>
     </div>
 
     <script>
-        // DATA 30 SOAL LENGKAP [cite: 8-107]
         const questions = [
             { id: 1, optionA: { text: "Saya menerima catatan/sms/email kata-kata manis.", cat: "words" }, optionB: { text: "Saya berpelukan dengan pasangan saya.", cat: "touch" } },
             { id: 2, optionA: { text: "Saya bisa menghabiskan waktu sendiri hanya berdua.", cat: "time" }, optionB: { text: "Pasangan saya melakukan sesuatu yang praktis untuk membantu saya.", cat: "acts" } },
@@ -60,9 +75,17 @@
         let answers = [];
         let userName = "";
 
+        const library = {
+            words: { title: "Words of Affirmation", emoji: "💬", desc: "Anda merasa sangat dicintai melalui pujian, apresiasi, dan kata-kata yang memotivasi. Kalimat verbal adalah kunci energi Anda." },
+            time: { title: "Quality Time", emoji: "⏳", desc: "Kehadiran penuh dan waktu tanpa distraksi adalah hal terpenting. Anda menghargai percakapan mendalam dan aktivitas bersama." },
+            gifts: { title: "Receiving Gifts", emoji: "🎁", desc: "Bagi Anda, hadiah adalah simbol visual dari kasih sayang. Ini bukan soal harga, tapi tentang pemikiran dan usaha di baliknya." },
+            acts: { title: "Acts of Service", opener: "🛠️", title: "Acts of Service", emoji: "🛠️", desc: "Tindakan nyata lebih bermakna dari sekadar kata-kata. Anda merasa dihargai saat seseorang membantu meringankan beban tugas Anda." },
+            touch: { title: "Physical Touch", emoji: "🤝", desc: "Sentuhan fisik non-seksual seperti jabat tangan erat, tepukan di bahu, atau pelukan memberikan rasa aman dan koneksi emosional bagi Anda." }
+        };
+
         function startTest() {
             userName = document.getElementById('nameInput').value;
-            if(!userName) return alert("Isi nama dulu ya bos!");
+            if(!userName) return alert("Silakan isi nama Anda.");
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('test-content').classList.remove('hidden');
             showQuestion();
@@ -70,17 +93,26 @@
 
         function showQuestion() {
             const q = questions[currentStep];
+            const progress = ((currentStep + 1) / questions.length) * 100;
             const content = document.getElementById('test-content');
             content.innerHTML = `
-                <div class="mb-4 bg-pink-50 p-2 rounded text-center text-xs font-bold text-pink-600 uppercase tracking-widest">Soal ${currentStep + 1} dari 30</div>
-                <h2 class="text-lg font-bold mb-6 text-gray-800 italic">"Lebih berkesan bagi saya ketika..."</h2>
-                <button onclick="handleAnswer('${q.optionA.cat}')" class="w-full text-left p-4 border-2 border-gray-100 mb-4 hover:border-pink-300 hover:bg-pink-50 rounded-xl transition-all shadow-sm">${q.optionA.text}</button>
-                <button onclick="handleAnswer('${q.optionB.cat}')" class="w-full text-left p-4 border-2 border-gray-100 hover:border-pink-300 hover:bg-pink-50 rounded-xl transition-all shadow-sm">${q.optionB.text}</button>
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-2 font-bold text-[10px] uppercase tracking-tighter text-slate-400">
+                        <span>Progress Analisis</span>
+                        <span>${currentStep + 1} / 30</span>
+                    </div>
+                    <div class="w-full bg-slate-100 h-1.5 rounded-full"><div class="bg-slate-800 h-full rounded-full transition-all" style="width: ${progress}%"></div></div>
+                </div>
+                <h2 class="text-lg font-bold mb-6 text-slate-800 italic">"Lebih berkesan bagi saya ketika..." [cite: 7]</h2>
+                <div class="space-y-3">
+                    <button onclick="handleAnswer('${q.optionA.cat}')" class="w-full text-left p-4 border border-slate-200 hover:border-slate-800 rounded-2xl transition-all bg-white text-sm font-medium text-slate-700 shadow-sm">${q.optionA.text}</button>
+                    <button onclick="handleAnswer('${q.optionB.cat}')" class="w-full text-left p-4 border border-slate-200 hover:border-slate-800 rounded-2xl transition-all bg-white text-sm font-medium text-slate-700 shadow-sm">${q.optionB.text}</button>
+                </div>
             `;
         }
 
-        async function handleAnswer(category) {
-            answers.push(category);
+        async function handleAnswer(cat) {
+            answers.push(cat);
             if(currentStep < questions.length - 1) {
                 currentStep++;
                 showQuestion();
@@ -90,48 +122,43 @@
         }
 
         async function finishTest() {
-            document.getElementById('test-content').innerHTML = "<div class='py-10 text-center'><div class='animate-spin rounded-full h-10 w-10 border-b-2 border-pink-500 mx-auto mb-4'></div><p>Menghitung & menyimpan hasil...</p></div>";
-            
             const counts = { words:0, time:0, gifts:0, acts:0, touch:0 };
             answers.forEach(c => counts[c]++);
-            
             const sorted = Object.keys(counts).sort((a,b) => counts[b] - counts[a]);
-            const primary = sorted[0];
+            const r1 = sorted[0], r2 = sorted[1], r3 = sorted[2];
 
-            // GANTI URL DI BAWAH INI DENGAN URL GOOGLE APPS SCRIPT KAMU
+            // GANTI URL DI BAWAH INI
             const scriptURL = 'https://script.google.com/macros/s/AKfycbzrnGyE6oQUwtnhvDj1hBuGKFo-76B73vNZHw44G1HUWAQ5OMEe1l1v_cPVXRc8n3iKmg/exec';
-            
-            try {
-                await fetch(scriptURL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify({ nama: userName, ...counts, result: primary.toUpperCase() })
-                });
-            } catch (e) { console.log("Gagal kirim data:", e); }
-
-            // Menampilkan hasil akhir [cite: 109-113]
-            const labels = {
-                words: "Word of Affirmation (Kata-kata)",
-                time: "Quality Time (Kebersamaan)",
-                gifts: "Receiving Gifts (Hadiah)",
-                acts: "Acts of Service (Tindakan)",
-                touch: "Physical Touch (Sentuhan Fisik)"
-            };
+            try { await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ nama: userName, ...counts, result: r1.toUpperCase() }) }); } catch (e) {}
 
             document.getElementById('test-content').innerHTML = `
-                <div class="text-center py-4">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Hasil Tes</h2>
-                    <p class="text-gray-600 mb-4">Bahasa cinta utama ${userName} adalah:</p>
-                    <div class="bg-pink-500 text-white p-4 rounded-2xl text-lg font-black uppercase shadow-lg mb-6">${labels[primary]}</div>
-                    <div class="text-left text-sm space-y-2 border-t pt-4">
-                        <p><b>Skor Lengkap:</b></p>
-                        <p>💬 Kata-kata: ${counts.words}</p>
-                        <p>⏳ Kebersamaan: ${counts.time}</p>
-                        <p>🎁 Hadiah: ${counts.gifts}</p>
-                        <p>🛠️ Tindakan: ${counts.acts}</p>
-                        <p>🤝 Sentuhan: ${counts.touch}</p>
+                <div class="animate-in fade-in duration-700">
+                    <h2 class="text-2xl font-black text-slate-900 mb-2 text-center text-slate-800">Profil Bahasa Cinta</h2>
+                    <p class="text-center text-slate-500 text-xs mb-8 uppercase tracking-widest font-bold">Hasil Analisis Peserta: ${userName}</p>
+                    
+                    <div class="djbc-gradient text-white p-6 rounded-3xl shadow-xl mb-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-[10px] font-bold uppercase tracking-widest opacity-70">Bahasa Utama (Rank 1) [cite: 109-114]</span>
+                            <span class="text-2xl">${library[r1].emoji}</span>
+                        </div>
+                        <h3 class="text-2xl font-black mb-2">${library[r1].title.toUpperCase()}</h3>
+                        <p class="text-sm leading-relaxed opacity-90 font-medium">${library[r1].desc}</p>
                     </div>
-                    <button onclick="location.reload()" class="mt-6 text-pink-500 font-bold underline">Ulangi Tes</button>
+
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                            <p class="text-[9px] font-bold text-slate-400 uppercase mb-1">Rank 2</p>
+                            <p class="text-xs font-bold text-slate-700">${library[r2].emoji} ${library[r2].title}</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                            <p class="text-[9px] font-bold text-slate-400 uppercase mb-1">Rank 3</p>
+                            <p class="text-xs font-bold text-slate-700">${library[r3].emoji} ${library[r3].title}</p>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button onclick="location.reload()" class="text-slate-400 font-bold text-[10px] uppercase hover:text-slate-800 transition-all tracking-widest underline">Ulangi Analisis</button>
+                    </div>
                 </div>
             `;
         }
