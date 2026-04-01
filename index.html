@@ -75,11 +75,36 @@
         let userName = "";
 
         const library = {
-            words: { title: "Words of Affirmation", emoji: "💬", desc: "Anda merasa sangat dicintai melalui pujian, apresiasi, dan kata-kata yang memotivasi. Kalimat verbal adalah kunci energi Anda." },
-            time: { title: "Quality Time", emoji: "⏳", desc: "Kehadiran penuh dan waktu tanpa distraksi adalah hal terpenting. Anda menghargai percakapan mendalam dan aktivitas bersama." },
-            gifts: { title: "Receiving Gifts", emoji: "🎁", desc: "Bagi Anda, hadiah adalah simbol visual dari kasih sayang. Ini bukan soal harga, tapi tentang pemikiran dan usaha di baliknya." },
-            acts: { title: "Acts of Service", emoji: "🛠️", desc: "Tindakan nyata lebih bermakna dari sekadar kata-kata. Anda merasa dihargai saat seseorang membantu meringankan beban tugas Anda." },
-            touch: { title: "Physical Touch", emoji: "🤝", desc: "Sentuhan fisik non-seksual memberikan rasa aman dan koneksi emosional bagi Anda." }
+            words: { 
+                title: "Words of Affirmation", 
+                emoji: "💬", 
+                desc: "Anda merasa sangat dicintai melalui pujian, apresiasi, dan kata-kata yang memotivasi.",
+                behavior: "Senang mendengar kalimat apresiasi yang spesifik, catatan motivasi, dan dukungan verbal saat menghadapi tantangan kerja." 
+            },
+            time: { 
+                title: "Quality Time", 
+                emoji: "⏳", 
+                desc: "Kehadiran penuh dan waktu tanpa distraksi adalah hal terpenting bagi Anda.",
+                behavior: "Menghargai percakapan mendalam, perhatian penuh tanpa terganggu ponsel, dan aktivitas bersama yang berkualitas."
+            },
+            gifts: { 
+                title: "Receiving Gifts", 
+                emoji: "🎁", 
+                desc: "Bagi Anda, hadiah adalah simbol visual dari pemikiran dan kasih sayang.",
+                behavior: "Menghargai kejutan kecil, oleh-oleh, atau hadiah yang menunjukkan bahwa seseorang meluangkan waktu untuk memikirkan Anda."
+            },
+            acts: { 
+                title: "Acts of Service", 
+                emoji: "🛠️", 
+                desc: "Tindakan nyata jauh lebih bermakna bagi Anda daripada sekadar kata-kata.",
+                behavior: "Merasa sangat terbantu jika seseorang menawarkan bantuan pada tugas yang menumpuk atau memberikan solusi praktis atas kendala yang dihadapi."
+            },
+            touch: { 
+                title: "Physical Touch", 
+                emoji: "🤝", 
+                desc: "Sentuhan fisik non-seksual memberikan rasa aman dan koneksi emosional bagi Anda.",
+                behavior: "Menghargai kehangatan melalui jabat tangan yang erat, tepukan penyemangat di bahu, atau pelukan sebagai bentuk kedekatan."
+            }
         };
 
         function startTest() {
@@ -142,13 +167,18 @@
                     <h2 class="text-2xl font-black text-slate-900 mb-2 text-center">Profil Bahasa Cinta</h2>
                     <p class="text-center text-slate-800 text-sm mb-8 uppercase tracking-widest font-black">${userName}</p>
                     
-                    <div class="djbc-gradient text-white p-6 rounded-3xl shadow-xl mb-6 text-center">
+                    <div class="djbc-gradient text-white p-6 rounded-3xl shadow-xl mb-6">
                         <div class="flex justify-between items-start mb-4">
                             <span class="text-[10px] font-bold uppercase tracking-widest opacity-70">Bahasa Utama (Rank 1)</span>
                             <span class="text-2xl">${library[r1].emoji}</span>
                         </div>
                         <h3 class="text-2xl font-black mb-2">${library[r1].title.toUpperCase()}</h3>
-                        <p class="text-sm leading-relaxed opacity-90 font-medium">${library[r1].desc}</p>
+                        <p class="text-sm leading-relaxed opacity-90 font-medium mb-4">${library[r1].desc}</p>
+                        
+                        <div class="bg-white/10 p-4 rounded-xl">
+                            <p class="text-[10px] font-bold uppercase tracking-widest mb-1 opacity-70">Indikator Perilaku:</p>
+                            <p class="text-xs leading-relaxed opacity-90">${library[r1].behavior}</p>
+                        </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-4 mb-8">
