@@ -25,7 +25,7 @@
             
             <div class="text-left mb-6">
                 <label class="block text-xs font-bold uppercase text-slate-400 mb-2 ml-1">Nama Lengkap</label>
-                <input id="nameInput" type="text" placeholder="Masukkan nama untuk pendataan..." 
+                <input id="nameInput" type="text" placeholder="Masukkan nama Anda..." 
                     class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-400 outline-none transition-all">
             </div>
             
@@ -128,7 +128,6 @@
             const sorted = Object.keys(counts).sort((a,b) => counts[b] - counts[a]);
             const r1 = sorted[0], r2 = sorted[1], r3 = sorted[2];
 
-            // GANTI URL DI BAWAH INI
             const scriptURL = 'https://script.google.com/macros/s/AKfycbzrnGyE6oQUwtnhvDj1hBuGKFo-76B73vNZHw44G1HUWAQ5OMEe1l1v_cPVXRc8n3iKmg/exec';
             try { 
                 await fetch(scriptURL, { 
@@ -141,14 +140,14 @@
             document.getElementById('test-content').innerHTML = `
                 <div>
                     <h2 class="text-2xl font-black text-slate-900 mb-2 text-center">Profil Bahasa Cinta</h2>
-                    <p class="text-center text-slate-500 text-xs mb-8 uppercase tracking-widest font-bold">Peserta: ${userName} [cite: 108]</p>
+                    <p class="text-center text-slate-800 text-sm mb-8 uppercase tracking-widest font-black">${userName}</p>
                     
-                    <div class="djbc-gradient text-white p-6 rounded-3xl shadow-xl mb-6">
+                    <div class="djbc-gradient text-white p-6 rounded-3xl shadow-xl mb-6 text-center">
                         <div class="flex justify-between items-start mb-4">
-                            <span class="text-[10px] font-bold uppercase tracking-widest opacity-70">Bahasa Utama (Rank 1) [cite: 114]</span>
+                            <span class="text-[10px] font-bold uppercase tracking-widest opacity-70">Bahasa Utama (Rank 1)</span>
                             <span class="text-2xl">${library[r1].emoji}</span>
                         </div>
-                        <h3 class="text-2xl font-black mb-2">${library[r1].title.toUpperCase()} [cite: 109-113]</h3>
+                        <h3 class="text-2xl font-black mb-2">${library[r1].title.toUpperCase()}</h3>
                         <p class="text-sm leading-relaxed opacity-90 font-medium">${library[r1].desc}</p>
                     </div>
 
